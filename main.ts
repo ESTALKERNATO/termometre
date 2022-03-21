@@ -1,15 +1,48 @@
-basic.forever(function () {
-    if (input.buttonIsPressed(Button.A)) {
-        basic.showString("" + (input.temperature()))
-        basic.showString("celsius")
+input.onButtonPressed(Button.A, function () {
+    serial.writeLine("" + (input.temperature()))
+    serial.writeLine("Celsius")
+    basic.showString("" + (input.temperature()))
+    basic.showString("Celsius")
+})
+input.onButtonPressed(Button.AB, function () {
+    if (input.temperature() >= 25) {
+        serial.writeLine("No fa falta jaqueta")
+        basic.showLeds(`
+            # . # . #
+            . # # # .
+            # # # # #
+            . # # # .
+            # . # . #
+            `)
+    } else {
+        serial.writeLine("Agafa la jaqueta")
+        basic.showLeds(`
+            . # # # .
+            # # # # #
+            . . # . .
+            # . # . .
+            # # # . .
+            `)
     }
 })
-basic.forever(function () {
-    if (input.buttonIsPressed(Button.B)) {
-        basic.showString("" + (input.temperature()))
-    } else if (25 <= 0) {
-        basic.showIcon(IconNames.Sad)
-    } else if (25 <= 0) {
-        basic.showIcon(IconNames.Happy)
+input.onButtonPressed(Button.B, function () {
+    if (input.temperature() >= 25) {
+        serial.writeLine("" + (input.temperature()))
+        basic.showLeds(`
+            . # . # .
+            . . . . .
+            # . . . #
+            . # # # .
+            . . . . .
+            `)
+    } else {
+        serial.writeLine("" + (input.temperature()))
+        basic.showLeds(`
+            . . . . .
+            . # . # .
+            . . . . .
+            . # # # .
+            # . . . #
+            `)
     }
 })
